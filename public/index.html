@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <ol id="news">
+
+    </ol>
+</body>
+<script async>
+    const ul = document.getElementById('news')
+    const getData = async () => {
+        await fetch('http://localhost:3000/dat').then(res => res.json()).then(dat => {
+            console.log(dat);
+            dat.forEach(el => {
+                let li = document.createElement('li')
+                let span = document.createElement('span')
+                let a = document.createElement('a')
+                let p = document.createElement('p')
+                let h5 = document.createElement('h5')
+
+                p.innerText = el.data
+                a.setAttribute('href', `https://timesofindia.indiatimes.com${el.link}`)
+                a.setAttribute('target', "_blank")
+                span.innerText = el.date
+                h5.innerText = el.title
+
+                a.appendChild(h5)
+                li.appendChild(a)
+                li.appendChild(span)
+                li.appendChild(p)
+                ul.appendChild(li)
+            });
+        })
+    }
+    getData()
+</script>
+
+</html>
